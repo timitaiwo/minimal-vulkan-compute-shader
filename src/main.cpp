@@ -1,4 +1,5 @@
 #include <vulkan/vulkan.hpp>
+#include <vulkan_wrapper.hpp>
 #include <iostream>
 #include <fstream>
 
@@ -6,47 +7,22 @@
 int main(int argc, char *argv[]) {
 
 
-
-
 ////////////////////////////////////////////////////////////////////////
 //                          PHYSICAL DEVICE                           //
 ////////////////////////////////////////////////////////////////////////
-	vk::PhysicalDevice PhysicalDevice = Instance.enumeratePhysicalDevices().front();
-	vk::PhysicalDeviceProperties DeviceProps = PhysicalDevice.getProperties();
 	std::cout << "Device Name    : " << DeviceProps.deviceName << std::endl;
 	const uint32_t ApiVersion = DeviceProps.apiVersion;
 	std::cout << "Vulkan Version : " << VK_VERSION_MAJOR(ApiVersion) << "." << VK_VERSION_MINOR(ApiVersion) << "." << VK_VERSION_PATCH(ApiVersion) << std::endl;
-	// vk::PhysicalDeviceLimits DeviceLimits = DeviceProps.limits;
-	// std::cout << "Max Compute Shared Memory Size: " << DeviceLimits.maxComputeSharedMemorySize / 1024 << " KB" << std::endl;
+	vk::PhysicalDeviceLimits DeviceLimits = DeviceProps.limits;
+	std::cout << "Max Compute Shared Memory Size: " << DeviceLimits.maxComputeSharedMemorySize / 1024 << " KB" << std::endl;
 
 
 ////////////////////////////////////////////////////////////////////////
 //                            QUEUE FAMILY                            //
 ////////////////////////////////////////////////////////////////////////
-	std::vector<vk::QueueFamilyProperties> QueueFamilyProps = PhysicalDevice.getQueueFamilyProperties();
-	auto PropIt = std::find_if(QueueFamilyProps.begin(), QueueFamilyProps.end(), [](const vk::QueueFamilyProperties& Prop) {
-		return Prop.queueFlags & vk::QueueFlagBits::eCompute;
-	});
-	const uint32_t ComputeQueueFamilyIndex = std::distance(QueueFamilyProps.begin(), PropIt);
+
 	std::cout << "Compute Queue Family Index: " << ComputeQueueFamilyIndex << std::endl;
 
-
-////////////////////////////////////////////////////////////////////////
-//                               DEVICE                               //
-////////////////////////////////////////////////////////////////////////
-	float queuePriorities = 1.0f;
-	vk::DeviceQueueCreateInfo DeviceQueueCreateInfo(
-			vk::DeviceQueueCreateFlags(),   // Flags
-			ComputeQueueFamilyIndex,        // Queue Family Index
-			1,                              // Number of Queues
-			&queuePriorities
-			);
-	vk::DeviceCreateInfo DeviceCreateInfo(
-			vk::DeviceCreateFlags(),   // Flags
-			1,
-			&DeviceQueueCreateInfo      // Device Queue Create Info struct
-			);
-	vk::Device Device = PhysicalDevice.createDevice(DeviceCreateInfo);
 
 ////////////////////////////////////////////////////////////////////////
 //                         Allocating Memory                          //
