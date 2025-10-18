@@ -1,4 +1,10 @@
-# A minimal application with Vulkan compute shaders
+# Introduction
+
+I am exploring vulkan development using this minimal vulkan application as a base.
+
+
+# ORIGINAL README
+## A minimal application with Vulkan compute shaders
 
 In this repository you will find a minimal Vulkan application that uses compute shaders.
 You can use this as a starting point for your project.
@@ -11,7 +17,7 @@ However, unlike the tutorial, the shader in this repository is written in GLSL i
 I also created a build system with CMake.
 
 
-## Building
+### Building
 
 CMake is used for building the application.
 Vulkan SDK needs to be installed.
@@ -39,7 +45,7 @@ I compiled and tested this program only on Linux.
 Contributions are welcome.
 
 
-## Expected Output
+### Expected Output
 
 The program just squares the numbers 0 to 9 in a compute shader.
 
