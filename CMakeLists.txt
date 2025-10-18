@@ -66,13 +66,19 @@ add_custom_target(compile-shaders ALL DEPENDS ${SPV_SHADERS})
 #######################################################################
 
 # Add the executable
-add_executable(main src/main.cpp)
+set(files 
+  src/main.cpp
+  src/vulkan_wrapper.cpp
+)
+
+add_executable(main ${files})
 
 # Add the binary tree to the search path for include files
 target_include_directories(main PUBLIC
 	"${PROJECT_BINARY_DIR}"
 	"${PROJECT_SOURCE_DIR}/src"
 	${Vulkan_INCLUDE_DIRS}
+  "src/include"
 	)
 
 target_link_libraries(main PUBLIC
